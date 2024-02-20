@@ -1,12 +1,7 @@
 const mongoose = require('mongoose');
 const userSchema=mongoose.Schema(
     {
-        name:{
-            type:String,
-            max:25,
-            required:true
-        }
-        ,email:{
+        email:{
             type:String,
         },
         mobile:{
@@ -14,12 +9,6 @@ const userSchema=mongoose.Schema(
         }
         ,password:{
             type:String,
-        },
-        address:{
-            type:String,
-        },
-        role:{
-            type:String
         }
         
     },

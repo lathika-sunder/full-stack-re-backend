@@ -1,7 +1,8 @@
 
 const express = require('express');
 const router = express.Router();
-const createUser=require('../controllers/usersController')
+const {createUser,loginUser}=require('../controllers/usersController')
+const hashPassword=require('../middleware/hashPassword')
 
 router.get('/',(request,response)=>{
     response.status(200).json({
@@ -9,5 +10,6 @@ router.get('/',(request,response)=>{
     })
 })
 
-router.post('/',createUser)
+router.post('/login',hashPassword,loginUser)
+
 module.exports=router
