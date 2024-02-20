@@ -1,7 +1,8 @@
 
 const express = require('express');
 const router = express.Router();
-const {createUser,loginUser}=require('../controllers/usersController')
+const {getUserDetails,loginUser}=require('../controllers/usersController')
+const verifyToken=require("../middleware/verifyToken")
 const hashPassword=require('../middleware/hashPassword')
 
 router.get('/',(request,response)=>{
@@ -11,5 +12,6 @@ router.get('/',(request,response)=>{
 })
 
 router.post('/login',hashPassword,loginUser)
+router.get('/user',verifyToken,getUserDetails)
 
 module.exports=router
