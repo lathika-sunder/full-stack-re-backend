@@ -7,6 +7,7 @@ const enterprisesRouter=require('./routes/enterprisesRoute')
 const individualsRouter=require('./routes/individualsRoute')
 const scrapDealersRouter=require('./routes/scrapDealersRoute')
 const usersRouter=require('./routes/usersRoute')
+const electricProducts=require('./data/electricProducts.json')
 
 app.use(cors())
 dotenv.config();
@@ -20,6 +21,11 @@ app.use('/api/v1/individuals',individualsRouter)
 app.use('/api/v1/scrap-dealers',scrapDealersRouter)
 app.use('/api/v1/users',usersRouter)
 
+
+app.get('/api/v1/electricProducts',(request,response)=>{
+    response.status(200).json(electricProducts);
+}
+)
 
 app.get('/',(request,response)=>{
     response.status(200).json( {message:"Welcome to the API"})
