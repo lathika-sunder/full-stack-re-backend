@@ -13,6 +13,16 @@ const signUpIndividual = async (request, response) => {
       return response.status(409).json({ message: "Email is already in use" });
     }
 
+       // Save in Users Table
+       const userToBeRegistered = new User({
+        email,
+        mobile,
+        password,
+        role:"individual"
+      });
+      const newUser = await userToBeRegistered.save();
+
+      
     // Save in Individuals Table
     const individualToBeRegistered = new Individual({
       name,
@@ -20,17 +30,11 @@ const signUpIndividual = async (request, response) => {
       mobile,
       address,
       password,
-      //   hashedPassword,
+      userId: newUser._id
     });
     const newIndividual = await individualToBeRegistered.save();
 
-    // Save in Users Table
-    const userToBeRegistered = new User({
-      email,
-      mobile,
-      password,
-    });
-    const newUser = await userToBeRegistered.save();
+ 
 
     response.status(201).json({ user: newIndividual });
   } catch (error) {
@@ -39,12 +43,12 @@ const signUpIndividual = async (request, response) => {
   }
 };
 
-const getUserDetails = async (request, response) => {
+const getIndividualDetails = async (request, response) => {
   try {
     const userId = request._id;
     console.log(userId);
 
-    const user = await User.findById(userId);
+    const user = await Individual.findOne({userId:userId});
     console.log(user);
     
     if (user) {
@@ -58,4 +62,4 @@ const getUserDetails = async (request, response) => {
   }
 };
 
-module.exports = { signUpIndividual, getUserDetails };
+module.exports = { signUpIndividual, getIndividualDetails };

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const User=require('./usersModel')
 const IndividualSchema=mongoose.Schema(
     {
         name:{
@@ -18,8 +19,9 @@ const IndividualSchema=mongoose.Schema(
         address:{
             type:String,
         },
-        role:{
-            type:String
+        userId:{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'User'
         }
         
     },

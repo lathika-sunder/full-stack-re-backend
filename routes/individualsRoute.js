@@ -1,6 +1,6 @@
 
 const express = require('express');
-const { signUpIndividual} = require('../controllers/individualsController');
+const {getIndividualDetails, signUpIndividual} = require('../controllers/individualsController');
 const router = express.Router();
 const Individual=require('../models/individualsModel')
 const verifyToken=require('../middleware/verifyToken')
@@ -15,7 +15,7 @@ router.get('/',async(request,response)=>{
 
 router.post('/',hashPasswordMiddleware,signUpIndividual)
 
-
+router.get('/individual',verifyToken,getIndividualDetails)
 
 
 module.exports=router

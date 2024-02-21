@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const User = require("../models/usersModel");
+const Individual=require('../models/individualsModel')
 const bcrypt=require('bcrypt')
 const generateToken=require('../helpers/generateToken')
 
@@ -38,26 +39,9 @@ const loginUser = async (request, response) => {
   }
 };
 
-const getUserDetails = async (request, response) => {
-  try {
-    const userId = request._id;
-    console.log(userId);
 
-    const user = await User.findById(userId);
-    console.log(user);
-    
-    if (user) {
-      return response.status(200).json(user);
-    } else {
-      return response.status(404).json({ message: "Individual not found" });
-    }
-  } catch (error) {
-    console.log("Error getting Individual Details", error);
-    return response.status(500).json({ error: "Internal Server Error" });
-  }
-};
 
 module.exports = {
   loginUser,
-  getUserDetails
+
 };
