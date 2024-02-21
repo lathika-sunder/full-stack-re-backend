@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const hashPassword = require("../middleware/hashPassword");
 const Individual = require("../models/individualsModel");
 const User = require("../models/usersModel");
-
+const Enterprise=require('../models/enterprisesModel')
 const signUpIndividual = async (request, response) => {
   try {
     const { name, email, mobile, address, password } = request.body;
@@ -47,9 +47,16 @@ const getIndividualDetails = async (request, response) => {
   try {
     const userId = request._id;
     console.log(userId);
-
-    const user = await Individual.findOne({userId:userId});
-    console.log(user);
+   var user = await User.findOne({_id:userId});
+   
+    if(user.role==="individual"){
+      user= await Individual.findOne({userId:userId});
+    }
+    else{
+      user= await Enterprise.findOne({userId:userId});
+    }
+    
+    
     
     if (user) {
       return response.status(200).json(user);

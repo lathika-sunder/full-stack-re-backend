@@ -28,7 +28,7 @@ const loginUser = async (request, response) => {
         // generate a token and save it to the database
         
         const token= await generateToken({ _id:existingUser._id})
-        return response.status(201).json({token})
+        return response.status(201).json({token,role:existingUser.role})
 
     }
     else{
