@@ -13,6 +13,7 @@ const pickupRequestSchema = new Schema({
     tags: [String],
     address: String,
     selectedDateTime: Date,
+    postedBy: { type: Schema.Types.ObjectId, ref: 'Individual' },  
     
 }, { timestamps: true })
 

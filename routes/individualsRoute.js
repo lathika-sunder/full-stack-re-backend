@@ -1,7 +1,7 @@
 
 const express = require('express');
 const {getIndividualDetails, signUpIndividual} = require('../controllers/individualsController');
-const addRequestPickup=require('../controllers/requestPickupController.js')
+const {addRequestPickup,getRequestPickup}=require('../controllers/requestPickupController.js')
 const router = express.Router();
 const Individual=require('../models/individualsModel')
 const verifyToken=require('../middleware/verifyToken')
@@ -19,6 +19,8 @@ router.post('/',hashPasswordMiddleware,signUpIndividual)
 
 router.get('/individual',verifyToken,getIndividualDetails)
 
-router.post("/request-pickup", upload.array("myImage",5), addRequestPickup);
+router.post("/request-pickup", upload.array("myImage",5),verifyToken, addRequestPickup);
+
+router.get("/pickup-history", verifyToken, getRequestPickup);
 
 module.exports=router
