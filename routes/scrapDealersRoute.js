@@ -1,6 +1,6 @@
 
 const express = require('express');
-const loginScrapDealer = require('../controllers/scrapDealersContoller');
+const {getAllRequests,loginScrapDealer }= require('../controllers/scrapDealersContoller');
 const router = express.Router();
 
 router.get('/',(request,response)=>{
@@ -9,5 +9,6 @@ router.get('/',(request,response)=>{
     })
 })
 
-router.post('/login',loginScrapDealer)
+router.post('/login', loginScrapDealer);
+router.get('/get-all-requests', getAllRequests);
 module.exports=router

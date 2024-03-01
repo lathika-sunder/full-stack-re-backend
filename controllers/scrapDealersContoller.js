@@ -1,6 +1,7 @@
 const ScrapDealer=require('../models/scrapDealersModel')
 const bcrypt=require('bcrypt')
-const generateToken=require('../helpers/generateToken')
+const generateToken=require('../helpers/generateToken');
+const pickupRequestModel = require('../models/pickupRequestsModel');
 
 const loginScrapDealer = async (request, response) => {
     try {
@@ -36,5 +37,8 @@ const loginScrapDealer = async (request, response) => {
       console.log("Error Logging In",error)
     }
   };
-
-  module.exports=loginScrapDealer;
+const getAllRequests = (req, res) => {
+  pickupRequestModel.find({}).then((data) => res.send(data))
+    .catch((err) => res.send(err));
+}
+module.exports = { loginScrapDealer,getAllRequests };

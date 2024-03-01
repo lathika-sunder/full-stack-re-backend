@@ -7,7 +7,10 @@ const pickupRequestSchema = new Schema({
         data: Buffer,
         contentType: String
     }],
-    requestStatus: String,
+    requestStatus: {
+        type: String,
+        default: "Pending",
+    },
     description: String,
     quantity : Number,
     tags: [String],

@@ -31,7 +31,11 @@ const addRequestPickup = (request, response) => {
       acceptedBy:null
     });
 
-    requestPickup.save();
+    requestPickup.save().then((data) => {
+      response.send(data);
+    }).catch((err) => {
+      response.send(err);
+    });
     console.log("ADDED TO DB");
   } catch (error) {
     response.status(400).send({ msg: "Request Failed" });
