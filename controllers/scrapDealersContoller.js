@@ -38,13 +38,22 @@ const loginScrapDealer = async (request, response) => {
     }
   };
 const getAllRequests = (req, res) => {
-  pickupRequestModel.find({}).then((data) => res.send(data))
+  pickupRequestModel.find({requestStatus : "pending"}).then((data) => res.send(data))
     .catch((err) => res.send(err)); 
 }
 const updateRequest = async(req, res) => {
   // res.send(req.body);
   const { requestId, status } = req.body;
-  const updatedResult = await pickupRequestModel.findByIdAndUpdate({ "_id": requestId }, { requestStatus: status });
+  const updatedResult = await pickupRequestModel.findByIdAndUpdate({ "_id": requestId }, { requestStatus: status, acceptedBy : req._id },{new : true});
   res.send(updatedResult);
 }
-module.exports = { loginScrapDealer,getAllRequests,updateRequest };
+
+const getAllAcceptedRequests = (req, res) => {
+  pickupRequestModel.find({ requestStatus: "accepted" }).then((data) => {
+    res.send(data);
+  })
+    .catch((err) => {
+      res.send(err);
+  })
+}
+module.exports = { loginScrapDealer,getAllRequests,updateRequest,getAllAcceptedRequests };
