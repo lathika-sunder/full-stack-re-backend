@@ -9,5 +9,8 @@ router.get('/',(request,response)=>{
     })
 })
 
-router.post('/login',loginScrapDealer)
+router.post('/login', loginScrapDealer);
+router.get("/change-request-status", (req, res) => {
+    res.status(200).send("ACCEPT/REJECT");
+})
 module.exports=router
