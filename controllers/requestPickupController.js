@@ -28,6 +28,7 @@ const addRequestPickup = (request, response) => {
       address,
       selectedDateTime,
       postedBy: userId,
+      acceptedBy:null
     });
 
     requestPickup.save();

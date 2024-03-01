@@ -1,5 +1,6 @@
 
 const express = require('express');
+const loginScrapDealer = require('../controllers/scrapDealersContoller');
 const router = express.Router();
 
 router.get('/',(request,response)=>{
@@ -7,4 +8,6 @@ router.get('/',(request,response)=>{
         message:"Welcome to scrap Dealers Route"
     })
 })
+
+router.post('/login',loginScrapDealer)
 module.exports=router

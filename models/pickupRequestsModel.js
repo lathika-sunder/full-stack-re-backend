@@ -14,6 +14,9 @@ const pickupRequestSchema = new Schema({
     address: String,
     selectedDateTime: Date,
     postedBy: { type: Schema.Types.ObjectId, ref: 'Individual' },  
+    acceptedBy:{ type: Schema.Types.ObjectId, ref: 'ScrapDealers' },
+   
+   
     
 }, { timestamps: true })
 

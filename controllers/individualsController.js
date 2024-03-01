@@ -3,6 +3,8 @@ const hashPassword = require("../middleware/hashPassword");
 const Individual = require("../models/individualsModel");
 const User = require("../models/usersModel");
 const Enterprise=require('../models/enterprisesModel')
+
+
 const signUpIndividual = async (request, response) => {
   try {
     const { name, email, mobile, address, password } = request.body;
