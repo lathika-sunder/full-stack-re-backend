@@ -41,11 +41,12 @@ const getAllRequests = (req, res) => {
   pickupRequestModel.find({requestStatus : "pending"}).then((data) => res.send(data))
     .catch((err) => res.send(err)); 
 }
-const updateRequest = async(req, res) => {
+const updateRequest = (req, res) => {
   // res.send(req.body);
   const { requestId, status } = req.body;
-  const updatedResult = await pickupRequestModel.findByIdAndUpdate({ "_id": requestId }, { requestStatus: status, acceptedBy : req._id },{new : true});
-  res.send(updatedResult);
+  const updatedResult = pickupRequestModel.findByIdAndUpdate({ "_id": requestId }, { requestStatus: status, acceptedBy: req._id }, { new: true }).then((data) => {
+    res.send(data);
+  }).catch((err) => res.send(err));
 }
 
 const getAllAcceptedRequests = (req, res) => {
