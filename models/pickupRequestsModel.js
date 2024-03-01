@@ -3,10 +3,16 @@ const mongoose=require("mongoose")
 const Schema = mongoose.Schema;
 
 const pickupRequestSchema = new Schema({
-    image: [{
-        data: Buffer,
-        contentType: String
-    }],
+    // image: [{
+    //     data: Buffer,
+    //     contentType: String
+    // }],
+    requestTitle: String,
+    userId: mongoose.SchemaTypes.ObjectId,
+    scrapDealerId: {
+        type: mongoose.SchemaTypes.ObjectId,
+        defailt: null,
+    },
     requestStatus: String,
     description: String,
     quantity : Number,

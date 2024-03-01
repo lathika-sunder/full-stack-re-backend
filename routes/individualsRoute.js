@@ -19,7 +19,7 @@ router.post('/',hashPasswordMiddleware,signUpIndividual)
 
 router.get('/individual',verifyToken,getIndividualDetails)
 
-router.post("/request-pickup", upload.array("myImage",5),verifyToken, addRequestPickup);
+router.post("/request-pickup", addRequestPickup);
 
 router.get("/pickup-history", verifyToken, getRequestPickup);
 
