@@ -1,6 +1,7 @@
 
 const express = require('express');
-const {getAllRequests,loginScrapDealer }= require('../controllers/scrapDealersContoller');
+const { getAllRequests, loginScrapDealer,updateRequest } = require('../controllers/scrapDealersContoller');
+const  verifyToken  = require("../middleware/verifyToken");
 const router = express.Router();
 
 router.get('/',(request,response)=>{
@@ -11,4 +12,5 @@ router.get('/',(request,response)=>{
 
 router.post('/login', loginScrapDealer);
 router.get('/get-all-requests', getAllRequests);
+router.post("/update-request",verifyToken, updateRequest);
 module.exports=router

@@ -39,6 +39,12 @@ const loginScrapDealer = async (request, response) => {
   };
 const getAllRequests = (req, res) => {
   pickupRequestModel.find({}).then((data) => res.send(data))
-    .catch((err) => res.send(err));
+    .catch((err) => res.send(err)); 
 }
-module.exports = { loginScrapDealer,getAllRequests };
+const updateRequest = async(req, res) => {
+  // res.send(req.body);
+  const { requestId, status } = req.body;
+  const updatedResult = await pickupRequestModel.findByIdAndUpdate({ "_id": requestId }, { requestStatus: status });
+  res.send(updatedResult);
+}
+module.exports = { loginScrapDealer,getAllRequests,updateRequest };
