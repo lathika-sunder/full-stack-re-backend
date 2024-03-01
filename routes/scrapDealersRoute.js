@@ -1,6 +1,7 @@
 
 const express = require('express');
 const loginScrapDealer = require('../controllers/scrapDealersContoller');
+const {getAllRequestPickup }= require("../controllers/requestPickupController");
 const router = express.Router();
 
 router.get('/',(request,response)=>{
@@ -9,5 +10,6 @@ router.get('/',(request,response)=>{
     })
 })
 
-router.post('/login',loginScrapDealer)
+router.post('/login', loginScrapDealer);
+router.get("/get-all-request-pickup", getAllRequestPickup);
 module.exports=router

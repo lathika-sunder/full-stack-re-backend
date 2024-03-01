@@ -17,7 +17,7 @@ router.get('/',async(request,response)=>{
 
 router.post('/',hashPasswordMiddleware,signUpIndividual)
 
-router.get('/individual',verifyToken,getIndividualDetails)
+router.get('/individual',getIndividualDetails)
 
 router.post("/request-pickup", addRequestPickup);
 

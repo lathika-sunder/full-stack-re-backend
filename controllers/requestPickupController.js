@@ -6,9 +6,12 @@ const Request=require('../models/pickupRequestsModel.js')
 
 const addRequestPickup = (request, response) => {
   try {
-    const userId = request.userId;
+    console.log(request.body);
     const requestPickup = new requestModel(request.body);
-    requestPickup.save();
+    //SAVE THE REQUEST IN DB
+    requestPickup.save().then(() => {
+      response.send("Success");
+    }).catch((err) => response.send(err));
     console.log("ADDED TO DB");
   } catch (error) {
     response.status(400).send({ msg: "Request Failed" });
@@ -35,7 +38,16 @@ const getRequestPickup = async (request, response) => {
   }
 };
 
+const getAllRequestPickup = async (req, res) => {
+  
+  const data = await Request.find({}).then((data) => {
+    console.log(data)
+  }).catch((err) => console.log(err));
+  
+}
+
 module.exports = {
   addRequestPickup,
   getRequestPickup,
+  getAllRequestPickup,
 };
