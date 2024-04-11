@@ -1,57 +1,77 @@
 const path = require("path");
-const requestModel = require("../models/pickupRequestsModel.js");
-const { fileURLToPath } = require("url");
-const Individual = require("../models/individualsModel.js");
-const Request=require('../models/pickupRequestsModel.js')
+const Request = require("../models/pickupRequestsModel.js");
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: './uploads',
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    }
+});
+const upload = multer({
+    storage: storage
+}).single('image');
 
-const addRequestPickup = (request, response) => {
-  try {
-    const userId = request._id;
-    console.log(userId)
-    
-    const {
-      image,
-      requestStatus,
-      description,
-      quantity,
-      tags,
-      address,
-      selectedDateTime,
-    } = request.body;
+const addRequestPickup = (req, res) => {
+    try {
+        const userId = req._id;
+        console.log(userId);
 
-    const requestPickup = new requestModel({
-      image,
-      requestStatus,
-      description,
-      quantity,
-      tags,
-      address,
-      selectedDateTime,
-      postedBy: userId,
-      acceptedBy:null
-    });
+        upload(req, res, (err) => {
+            if (err) {
+                return res.status(400).json({ message: "Image upload failed", error: err });
+            }
+           
+            const imageUrl = req.file.path
+            console.log(imageUrl)
 
-    requestPickup.save().then((data) => {
-      response.send(data);
-    }).catch((err) => {
-      response.send(err);
-    });
-    console.log("ADDED TO DB");
-  } catch (error) {
-    response.status(400).send({ msg: "Request Failed" });
-    console.log("Error Submitting");
-  }
+            const {
+                requestStatus,
+                description,
+                quantity,
+                tags,
+                address,
+                selectedDateTime,
+            } = req.body;
+
+            
+
+            const requestPickup = new Request({
+                image: imageUrl,
+                requestStatus,
+                description,
+                quantity,
+                tags,
+                address,
+                selectedDateTime,
+                amount: null,
+                postedBy: userId,
+                acceptedBy: null
+            });
+
+            requestPickup.save().then((data) => {
+                res.status(200).json(data);
+            }).catch((err) => {
+                res.status(500).json({ message: "Error saving request pickup", error: err });
+            });
+        });
+    } catch (error) {
+        res.status(400).json({ message: "Request failed with error", error: error });
+    }
 };
 
 const getRequestPickup = async (request, response) => {
   try {
     const userId = request._id;
 
-    const pickup = await Request.find({postedBy:userId});
+    const pickups = await Request.find({postedBy:userId});
     
-    if(pickup!==null)
+    if(pickups.length>0)
     {
-      return response.status(200).json(pickup);
+      const formattedPickups = pickups.map(pickup => ({
+        ...pickup.toJSON(),
+        image: `http://localhost:4040/${pickup.image}`
+    }));
+      return response.status(200).json(formattedPickups);
     }
     else{
       return response.status(404).json({"message":"No requests found!"})
@@ -63,6 +83,6 @@ const getRequestPickup = async (request, response) => {
 };
 
 module.exports = {
-  addRequestPickup,
-  getRequestPickup,
+    addRequestPickup,
+    getRequestPickup,
 };

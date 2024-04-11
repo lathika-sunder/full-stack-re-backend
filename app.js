@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const path=require('path')
 const dotenv = require('dotenv');
 const connect=require('./database/connection')
 const cors=require('cors')
@@ -15,7 +16,7 @@ dotenv.config();
 connect()
 
 app.use(express.json());
-
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/v1/enterprises',enterprisesRouter)
 app.use('/api/v1/individuals',individualsRouter)
 app.use('/api/v1/scrap-dealers',scrapDealersRouter)

@@ -26,7 +26,7 @@ const ScrapDealersSchema = mongoose.Schema(
     },
     address: {
       type: String,
-    },
+    }
   },
   {
     timestamps: true,
